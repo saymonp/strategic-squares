@@ -65,6 +65,7 @@ for (let i = 0; i < 8; i++) {
     square.classList.add('square');
     square.setAttribute("row", i);
     square.setAttribute("col", j);
+    applyClickSquare(square);
 
     if ((i + j) % 2 === 0) {
       square.classList.add('black-square');
@@ -74,8 +75,9 @@ for (let i = 0; i < 8; i++) {
 
     if (board[i][j] != null) {
       let piece = document.createElement('div');
-      piece.setAttribute("id", board[i][j].type);
+      piece.setAttribute("id", "piece");
       piece.innerHTML = board[i][j].code;
+      applyClick(piece);
       square.appendChild(piece);
     }
     
@@ -92,14 +94,35 @@ function move(board, piece, row, col) {
 
     const positionOld = (piece.row*8)+piece.col;
     const positionNew = (row*8)+col;
-    square[positionOld].innerHTML = "";
-    square[positionNew].innerHTML = piece.code;
+
+    square[positionNew].appendChild(square[positionOld].firstChild);
+    square[positionOld] = ""
 
     board[piece.row][piece.col] = null
     piece.row = row;
     piece.col = col;
     board[row][col] = piece;
   }
+}
+
+
+function applyClick(pieceEl) {
+  pieceEl.addEventListener("click", function() {
+    // aqui você pode usar o elemento como precisar
+    parentPiece = pieceEl.parentNode
+    var rowValue = parentPiece.getAttribute("row");
+    var colValue = parentPiece.getAttribute("col");
+    console.log(rowValue, colValue)
+  });
+}
+
+function applyClickSquare(squareEl) {
+  squareEl.addEventListener("click", function() {
+    // aqui você pode usar o elemento como precisar
+    var rowValue = squareEl.getAttribute("row");
+    var colValue = squareEl.getAttribute("col");
+    console.log(rowValue, colValue)
+  });
 }
 
 move(board, board[6][4], 4, 4);

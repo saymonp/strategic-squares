@@ -23,6 +23,15 @@
 }
 
 
+/* #piece {
+    cursor: pointer;
+ } */
+
+ #piece:hover {
+    cursor: pointer;
+    background-color: #e6e6e6;
+  }
+
 
 .chessboard {
     width: 640px;
